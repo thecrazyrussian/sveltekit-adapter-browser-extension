@@ -22,23 +22,24 @@ function generate_csp (html) {
 	return `script-src 'self' ${csp_hashes}; object-src 'self'`
 }
 
-function generate_manifest (html, manifest_version) {
+function generate_manifest (html, manifest_version, manifest = {}) {
 	const project_placeholders = {
 		name: 'TODO',
 		version: '0.1'
 	}
 	if (manifest_version === 2) {
-		return {
+		return {...{
 			manifest_version: 2,
 			browser_action: {
 				default_title: 'SvelteKit',
 				default_popup: 'index.html'
 			},
-			content_security_policy: generate_csp(html),
-			...project_placeholders
+			content_security_policy: generate_csp(html),},
+			...project_placeholders,
+			...manifest
 		}
 	}
-	return {
+	return {...{
 		manifest_version: 3,
 		action: {
 			default_title: 'SvelteKit',
@@ -46,9 +47,11 @@ function generate_manifest (html, manifest_version) {
 		},
 		content_security_policy: {
 			"extension_pages": "script-src 'self'; object-src 'self'"
-		},
-		...project_placeholders
+		},},
+		...project_placeholders,
+		...manifest
 	}
+
 }
 
 function load_manifest () {
@@ -73,7 +76,7 @@ function externalizeScript(html, assets) {
 }
 
 /** @type {import('.')} */
-export default function ({ pages = 'build', assets = pages, fallback, manifestVersion = 3 } = {}) {
+export default function ({ pages = 'build', assets = pages, manifestVersion = 3, manifest={}, fallback } = {}) {
 	return {
 		name: 'sveltekit-adapter-browser-extension',
 
@@ -96,20 +99,21 @@ export default function ({ pages = 'build', assets = pages, fallback, manifestVe
 
 			const index_page = join(assets, 'index.html')
 			const index = readFileSync(index_page)
-			
+
 			/** The content security policy of manifest_version 3 does not allow for inlined scripts.
 			Until kit implements a config option (#1776) to externalize scripts, the below code block should do 
 			for a quick and dirty externalization of the scripts' contents **/
-            		if (manifestVersion === 3) {
-                		const HTML_files = await glob('**/*.html', { cwd: pages, dot: true, absolute: true, filesOnly: true })  
-                		HTML_files.forEach(path => {
-                    			let html = readFileSync(path, {encoding:'utf8'})
- 					html = externalizeScript(html, assets)
-        				writeFileSync(path, html)
-            			});
-            		}
+			if (manifestVersion === 3) {
+				const HTML_files = await glob('**/*.html', { cwd: pages, dot: true, absolute: true, filesOnly: true })
+				HTML_files.forEach(path => {
+						let html = readFileSync(path, {encoding:'utf8'})
+			html = externalizeScript(html, assets)
+				writeFileSync(path, html)
+				});
+			}
 
-			const generated_manifest = generate_manifest(index.toString(), manifestVersion)
+			const generated_manifest = generate_manifest(index.toString(), manifestVersion, manifest)
+
 			const merged_manifest = applyToDefaults(generated_manifest, provided_manifest, { nullOverride: true })
 
 			writeFileSync(join(assets, manifest_filename), JSON.stringify(merged_manifest))
