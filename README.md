@@ -3,7 +3,7 @@
 [Adapter](https://kit.svelte.dev/docs#adapters) for SvelteKit which turns your app into a cross-platform browser extension.
 
 ## Provenance
-Forked from (https://github.com/antony/sveltekit-adapter-browser-extension)[https://github.com/antony/sveltekit-adapter-browser-extension] due to needng things working.
+Forked from [https://github.com/antony/sveltekit-adapter-browser-extension](https://github.com/antony/sveltekit-adapter-browser-extension) due to needng things working.
 ## Usage
 
 Install with `npm i -D thecrazyrussian/sveltekit-adapter-browser-extension@0.4.0`, then add the adapter to your `svelte.config.js`.
