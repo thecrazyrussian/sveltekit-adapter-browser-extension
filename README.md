@@ -1,16 +1,18 @@
-# sveltekit-adapter-browser-extension
+# sveltekit-adapter-browser-ext
 
 [Adapter](https://kit.svelte.dev/docs#adapters) for SvelteKit which turns your app into a cross-platform browser extension.
 
+## Provenance
+Forked from (https://github.com/antony/sveltekit-adapter-browser-extension)[https://github.com/antony/sveltekit-adapter-browser-extension] due to needng things working.
 ## Usage
 
-Install with `npm i -D sveltekit-adapter-browser-extension`, then add the adapter to your `svelte.config.js`.
+Install with `npm i -D thecrazyrussian/sveltekit-adapter-browser-extension@0.4.0`, then add the adapter to your `svelte.config.js`.
 
 Some additional configuration is required for this adapter to work - you need to (1) set ``appDir`` to something without an underscore and (2) tell kit to prerender its pages by default:
 
 ```js
 // svelte.config.js
-import adapter from 'sveltekit-adapter-browser-extension';
+import adapter from 'thecrazyrusina/sveltekit-adapter-browser-extension';
 
 export default {
 	kit: {
@@ -44,7 +46,7 @@ If you get an error about `_app` being a disallowed folder, delete `_app` from w
 
 ## Configuration
 
-To specify your own manifest information (it will be merged with the generated one), simply have a manifest file local within your app directory.
+To specify your own manifest information (it will be merged with the generated one), simply have a manifest file local within your app directory. It grabs the package.json's version and name by default. Uses uppercased an split name for manifest deault action title.
 
 ## Roadmap
 
