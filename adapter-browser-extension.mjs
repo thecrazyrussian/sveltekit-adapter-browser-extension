@@ -23,15 +23,18 @@ function generate_csp (html) {
 }
 
 function generate_manifest (html, manifest_version, manifest = {}) {
+	var packagejson = JSON.parse(readFileSync('package.json', 'utf8'))
 	const project_placeholders = {
-		name: 'TODO',
-		version: '0.1'
+		name: packagejson.name,
+		version: packagejson.version
 	}
+	const default_action_name = packagejson.name.replaceAll('-', ' ').replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
+
 	if (manifest_version === 2) {
 		return {...{
 			manifest_version: 2,
 			browser_action: {
-				default_title: 'SvelteKit',
+				default_title: default_action_name,
 				default_popup: 'index.html'
 			},
 			content_security_policy: generate_csp(html),},
@@ -42,7 +45,7 @@ function generate_manifest (html, manifest_version, manifest = {}) {
 	return {...{
 		manifest_version: 3,
 		action: {
-			default_title: 'SvelteKit',
+			default_title: default_action_name,
 			default_popup: 'index.html'
 		},
 		content_security_policy: {
