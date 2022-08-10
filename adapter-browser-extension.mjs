@@ -35,7 +35,8 @@ function generate_manifest (html, manifest_version, manifest = {}) {
 			manifest_version: 2,
 			browser_action: {
 				default_title: default_action_name,
-				default_popup: 'index.html'
+				default_popup: 'index.html',
+				"default_icon": "favicon.png",
 			},
 			content_security_policy: generate_csp(html),},
 			...project_placeholders,
