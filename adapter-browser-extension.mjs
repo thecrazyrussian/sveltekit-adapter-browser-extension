@@ -36,7 +36,7 @@ function generate_manifest (html, manifest_version, manifest = {}) {
 			browser_action: {
 				default_title: default_action_name,
 				default_popup: 'index.html',
-				"default_icon": "favicon.png",
+				default_icon: "favicon.png"
 			},
 			content_security_policy: generate_csp(html),},
 			...project_placeholders,
@@ -47,7 +47,8 @@ function generate_manifest (html, manifest_version, manifest = {}) {
 		manifest_version: 3,
 		action: {
 			default_title: default_action_name,
-			default_popup: 'index.html'
+			default_popup: 'index.html',
+			default_icon: "favicon.png"
 		},
 		content_security_policy: {
 			"extension_pages": "script-src 'self'; object-src 'self'"
