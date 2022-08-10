@@ -26,7 +26,8 @@ function generate_manifest (html, manifest_version, manifest = {}) {
 	var packagejson = JSON.parse(readFileSync('package.json', 'utf8'))
 	const project_placeholders = {
 		name: packagejson.name,
-		version: packagejson.version
+		version: packagejson.version,
+		description: packagejson.description
 	}
 	const default_action_name = packagejson.name.replaceAll('-', ' ').replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
 
