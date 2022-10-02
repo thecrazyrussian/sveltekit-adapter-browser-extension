@@ -1,6 +1,8 @@
-# create-svelte
+# sveltekit-adapter-browser-extension example
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte);
+Create a simple popup extension with `sveltekit-adapter-browser-extension`.
+
+![Example extension popup screenshot](screenshot.png)
 
 ## Creating a project
 
@@ -16,23 +18,12 @@ npm init svelte@next my-app
 
 > Note: the `@next` is temporary
 
-## Developing
+## Developing/building
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-Before creating a production version of your app, install an [adapter](https://kit.svelte.dev/docs#adapters) for your target environment. Then:
+Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), build the extension:
 
 ```bash
 npm run build
 ```
 
-> You can preview the built app with `npm run preview`, regardless of whether you installed an adapter. This should _not_ be used to serve your app in production.
+Your extension should now be in the `build` folder of your project. You can then manually install it in [Chrome](https://support.google.com/chrome/a/answer/2714278?hl=en) or [Firefox](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Your_first_WebExtension#installing). Note that Firefox requires you to set `manifestVersion: 2` in `svelte.config.js`.
